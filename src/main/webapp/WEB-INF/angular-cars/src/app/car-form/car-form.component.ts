@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {Car} from "../car";
-import {CarsService} from "../cars.service";
-import {map} from "rxjs/operators";
+import {Car} from "../models/car";
+import {CarsService} from "../services/cars.service";
 
 @Component({
   selector: 'app-car-form',

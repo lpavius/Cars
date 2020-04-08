@@ -13,7 +13,7 @@ import {FormsModule} from "@angular/forms";
     AppComponent,
     CarModelListComponent,
     BrandListComponent,
-    CarFormComponent
+    CarFormComponent,
   ],
   imports: [
     BrowserModule,
