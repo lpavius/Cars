@@ -28,7 +28,11 @@ export class CarModelListComponent implements OnInit {
       .subscribe(response => {
         this.carsService.carObverver.next(car);
         this.ngOnInit();
-      });
+      },
+      () => {
+        alert("Unauthorized");
+      }
+    );
   }
 
 }

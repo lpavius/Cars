@@ -13,4 +13,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  loggedIn(): boolean {
+    return sessionStorage.getItem('token') && sessionStorage.getItem('token').length !== 0;
+  }
 }

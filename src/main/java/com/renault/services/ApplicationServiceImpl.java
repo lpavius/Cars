@@ -1,8 +1,13 @@
 package com.renault.services;
 
 import com.renault.models.Car;
+import com.renault.models.Role;
+import com.renault.models.User;
 import com.renault.repositories.CarsRepository;
+import com.renault.repositories.RoleRepository;
+import com.renault.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -20,6 +25,15 @@ public class ApplicationServiceImpl implements ApplicationService {
     @Autowired
     private CarsRepository carsRepository;
 
+    @Autowired
+    private RoleRepository roleRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Override
     @Transactional
     public void deleteAll() {
@@ -29,9 +43,28 @@ public class ApplicationServiceImpl implements ApplicationService {
     @Override
     @Transactional
     public void insertData() {
-        for (Car car : getCars()) {
-            carsRepository.save(car);
-        }
+        insertUsers();
+        insertCars();
+    }
+
+    private void insertUsers() {
+        // insert a USER role and a ADMIN role
+        Role userRole = new Role("USER");
+        roleRepository.save(userRole);
+        Role adminRole = new Role("ADMIN");
+        roleRepository.save(adminRole);
+
+        // insert a admin user with the "supermotdepasse1!" password
+        User adminUser = new User("admin", passwordEncoder.encode("supermotdepasse1!"), true, adminRole);
+        userRepository.save(adminUser);
+
+    }
+
+    private void insertCars() {
+        //for (Car car : getCars()) {
+        //    carsRepository.save(car);
+        //}
+        getCars().forEach(car -> carsRepository.save(car));
     }
 
     private List<Car> getCars() {
